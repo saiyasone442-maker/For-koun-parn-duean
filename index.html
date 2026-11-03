@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>มีบางอย่างจะบอกคุณปาน 💗</title>
+<link href="https://fonts.googleapis.com/css2?family=Mali:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#ffe3ec;--bg2:#fff4e0;--ink:#7a4a3a;--pink:#ff7fa8;--pink2:#ff5c8f;--card:#ffffffcc;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg1:#3a2230;--bg2:#2e2a3a;--ink:#ffe6ee;--card:#ffffff1a}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;margin:0}
+body{font-family:'Mali','Sarabun','Noto Sans Thai',sans-serif;color:var(--ink);background:linear-gradient(160deg,var(--bg1),var(--bg2));overflow:hidden}
+.screen{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px;text-align:center}
+.screen.on{display:flex;animation:pop .5s ease}
+@keyframes pop{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:none}}
+h1{font-size:1.5rem;margin:0;line-height:1.5}
+.hint{font-size:.95rem;opacity:.85;min-height:1.4em}
+.pic{position:relative;width:190px;height:190px;animation:bob 2.2s ease-in-out infinite;cursor:pointer;user-select:none;-webkit-user-select:none}
+.pic img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:6px solid #fff;outline:4px solid var(--pink);box-shadow:0 10px 24px #ff5c8f55;pointer-events:none}
+.pic.wig{animation:wig .5s}
+@keyframes bob{50%{transform:translateY(-9px)}}
+@keyframes wig{20%{transform:rotate(-10deg) scale(1.08)}60%{transform:rotate(10deg) scale(1.08)}}
+.pic b{position:absolute;font-size:30px;animation:flt 2s ease-in-out infinite;pointer-events:none}
+.pic b:nth-child(2){left:-14px;top:-6px}
+.pic b:nth-child(3){right:-14px;top:6px;animation-delay:.5s}
+.pic b:nth-child(4){right:-6px;bottom:-8px;animation-delay:1s}
+.pic b.crown{left:50%;top:-34px;font-size:44px;transform:translateX(-50%);animation:none}
+@keyframes flt{50%{transform:translateY(-8px) scale(1.15)}}
+.bar{width:min(260px,70vw);height:16px;border-radius:99px;background:var(--card);overflow:hidden;border:2px solid var(--pink)}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pink),var(--pink2));transition:width .15s}
+.fp{position:relative;width:140px;height:140px;border-radius:50%;background:var(--card);border:4px solid var(--pink);display:grid;place-items:center;touch-action:none;user-select:none;-webkit-user-select:none;cursor:pointer;animation:pulse 1.8s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 #ff7fa8aa}70%{box-shadow:0 0 0 18px #ff7fa800}}
+.fp svg{width:84px;height:84px}
+.fp .scan{position:absolute;left:8%;width:84%;height:4px;border-radius:4px;background:var(--pink2);box-shadow:0 0 10px var(--pink2);top:10%;opacity:0}
+.fp.go .scan{opacity:1;animation:sweep .8s ease-in-out infinite alternate}
+.fp.go{transform:scale(.96)}
+@keyframes sweep{to{top:86%}}
+.fp.ok{border-color:#4cc38a;animation:none}
+.ring{width:min(260px,70vw);height:10px;border-radius:9px;background:var(--card)}
+.ring i{display:block;height:100%;width:0;border-radius:9px;background:#4cc38a}
+.btns{display:flex;gap:16px;align-items:center;min-height:90px}
+button{font-family:inherit;font-weight:700;border:0;border-radius:99px;padding:14px 30px;font-size:1.2rem;cursor:pointer}
+#yes{background:linear-gradient(135deg,var(--pink),var(--pink2));color:#fff;box-shadow:0 6px 0 #d94577;animation:beat 1s infinite;font-size:calc(1.3rem * var(--g,1));padding:calc(16px * var(--g,1)) calc(38px * var(--g,1))}
+#yes:active{box-shadow:0 2px 0 #d94577}
+@keyframes beat{50%{transform:scale(1.07)}}
+#no{background:#d8d0d0;color:#9a8f8f;cursor:not-allowed;box-shadow:0 6px 0 #bdb3b3;font-size:calc(1.2rem / var(--g,1))}
+#no.shake{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.timer{font-size:1.1rem;background:var(--card);padding:8px 18px;border-radius:99px;border:2px dashed var(--pink)}
+#send{background:#fff;color:var(--pink2);border:3px solid var(--pink);font-size:1rem;padding:10px 22px}
+.fx{position:fixed;pointer-events:none;z-index:9;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg)}}
+.pop{position:fixed;pointer-events:none;z-index:9;font-size:26px;animation:burst .9s ease-out forwards}
+@keyframes burst{to{transform:translate(var(--dx),var(--dy)) scale(1.4);opacity:0}}
+.stk{position:fixed;left:50%;top:20%;z-index:12;pointer-events:none;display:flex;flex-direction:column;align-items:center;gap:6px;transform:translateX(-50%);animation:stk 1.9s ease forwards}
+.stk .em{font-size:84px;line-height:1;filter:drop-shadow(0 0 0 #fff) drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 3px 0 #fff) drop-shadow(0 -3px 0 #fff) drop-shadow(0 8px 10px #0003);animation:cry .35s ease-in-out infinite alternate}
+.stk .bub{background:#fff;color:#7a4a3a;border:3px solid var(--pink);border-radius:18px;padding:6px 16px;font-weight:700;font-size:1.05rem;white-space:nowrap}
+@keyframes stk{0%{opacity:0;transform:translateX(-50%) scale(.2) rotate(-12deg)}15%{opacity:1;transform:translateX(-50%) scale(1.15) rotate(6deg)}30%{transform:translateX(-50%) scale(1) rotate(-3deg)}80%{opacity:1}100%{opacity:0;transform:translateX(-50%) translateY(-30px) scale(.9)}}
+@keyframes cry{from{transform:rotate(-6deg)}to{transform:rotate(6deg)}}
+.tear{position:fixed;z-index:11;pointer-events:none;font-size:22px;animation:tear 1.1s ease-in forwards}
+@keyframes tear{to{transform:translateY(160px);opacity:0}}
+.mascot{width:100%;height:100%;border-radius:50%;overflow:hidden;border:6px solid #fff;outline:4px solid var(--pink);box-shadow:0 10px 24px #ff5c8f55;pointer-events:none;background:#ffeaf2}
+.mascot svg{width:100%;height:100%;display:block}
+</style>
+</head>
+<body>
+
+<section class="screen on" id="s1">
+  <div class="pic"><div class="mascot"></div><b>✨</b><b>💗</b><b>🎀</b></div>
+  <h1>รอแปปนะ<br>เรามีบางอย่างจะบอกคุณปาน</h1>
+  <div class="bar"><i id="fill"></i></div>
+  <div class="hint" id="pct">0%</div>
+</section>
+
+<section class="screen" id="s2">
+  <div class="pic"><div class="mascot"></div><b>🔍</b><b>💗</b><b>✨</b></div>
+  <h1>ขอสแกนนิ้วทีนะ</h1>
+  <div class="fp" id="fp">
+    <svg viewBox="0 0 64 64" fill="none" stroke="#ff5c8f" stroke-width="3" stroke-linecap="round">
+      <path d="M12 30a20 20 0 0 1 40 0"/><path d="M18 32a14 14 0 0 1 28 0v6"/>
+      <path d="M24 34a8 8 0 0 1 16 0v10"/><path d="M32 34v14"/>
+      <path d="M18 40v6M46 40c0 8-2 12-4 16M26 44c0 6 0 8-2 12"/>
+    </svg>
+    <div class="scan"></div>
+  </div>
+  <div class="ring"><i id="ringFill"></i></div>
+  <div class="hint" id="fpHint">กดนิ้วค้างไว้ที่วงกลมนะ 👆</div>
+</section>
+
+<section class="screen" id="s3">
+  <div class="pic"><div class="mascot"></div><b>💗</b><b>🥺</b><b>💕</b></div>
+  <h1>เป็นแฟนกันนะะะ 💗</h1>
+  <div class="btns">
+    <button id="yes">เป็น 💕</button>
+    <button id="no" aria-disabled="true">ไม่</button>
+  </div>
+  <div class="hint" id="noMsg">&nbsp;</div>
+</section>
+
+<section class="screen" id="s4">
+  <div class="pic"><b class="crown">👑</b><div class="mascot"></div><b>💖</b><b>🎉</b><b>✨</b></div>
+  <h1>เย้ๆ เราเป็นแฟนกันแล้วนะ<br>รักคุณปานมากกๆ 💕</h1>
+  <div class="timer" id="timer">เป็นแฟนกันมาแล้ว 0 วินาที ⏱️</div>
+  <button id="send">แตะรูปหรือกดตรงนี้ ส่งหัวใจ 💗 <span id="cnt">0</span></button>
+  <a href="https://youtu.be/1OMZrYHIim8?si=ekB3BubyvZiPm0Or" target="_blank" rel="noopener noreferrer" style="display:inline-block;text-decoration:none;background:linear-gradient(135deg,#ff7fa8,#ff5c8f);color:#fff;font-weight:700;border-radius:99px;padding:12px 28px;font-size:1.1rem;box-shadow:0 5px 0 #d94577">🎵 เปิดเพลงของเรา</a>
+</section>
+
+<script>
+const $=id=>document.getElementById(id);
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));$(id).classList.add('on')}
+function buzz(n){try{navigator.vibrate&&navigator.vibrate(n)}catch(e){}}
+let ac;function pop(f){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=f||620;o.type='sine';g.gain.setValueAtTime(.12,ac.currentTime);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+.18);o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+.2)}catch(e){}}
+function burst(x,y){const em=['💗','💕','💖','🧸','✨','🌸'];
+  for(let i=0;i<8;i++){const h=document.createElement('div');h.className='pop';h.textContent=em[i%em.length];
+    h.style.left=x-12+'px';h.style.top=y-12+'px';const a=Math.random()*6.28,r=60+Math.random()*60;
+    h.style.setProperty('--dx',Math.cos(a)*r+'px');h.style.setProperty('--dy',Math.sin(a)*r-30+'px');
+    document.body.appendChild(h);setTimeout(()=>h.remove(),1000)}}
+let hearts=0;
+function love(x,y){burst(x,y);pop(500+Math.random()*400);buzz(25);hearts++;$('cnt').textContent=hearts}
+document.querySelectorAll('.pic').forEach(p=>p.addEventListener('pointerdown',e=>{
+  p.classList.remove('wig');void p.offsetWidth;p.classList.add('wig');
+  if($('s4').classList.contains('on'))love(e.clientX,e.clientY);else{burst(e.clientX,e.clientY);pop(520)}}));
+
+// 1) loading
+const msgs=['กำลังโหลดความรัก 💗','กำลังเตรียมคำพูดน่ารักๆ 🧸','ใจเต้นแรงแล้วนะ 🥺','ใกล้เสร็จแล้ว ✨'];
+let p=0;
+const t=setInterval(()=>{p=Math.min(100,p+Math.random()*8+3);$('fill').style.width=p+'%';
+  $('pct').textContent=Math.floor(p)+'% · '+msgs[Math.min(3,Math.floor(p/26))];
+  if(p>=100){clearInterval(t);setTimeout(()=>show('s2'),500)}},180);
+
+// 2) fake fingerprint
+const fp=$('fp');let prog=0,timer=null,done=false;
+function start(e){if(done)return;e.preventDefault();fp.classList.add('go');
+  clearInterval(timer);timer=setInterval(()=>{prog+=3;$('ringFill').style.width=Math.min(prog,100)+'%';buzz(8);
+    $('fpHint').textContent='กำลังสแกน... '+Math.min(prog,100)+'% อย่าเพิ่งปล่อยนะ 🥺';
+    if(prog>=100){clearInterval(timer);done=true;fp.classList.remove('go');fp.classList.add('ok');buzz([60,40,60]);pop(880);
+      $('fpHint').textContent='ตรวจพบ: คุณปาน ✅ ตรงกับฐานข้อมูลหัวใจ 100%';setTimeout(()=>show('s3'),1500)}},80)}
+function stop(){if(done)return;clearInterval(timer);prog=0;$('ringFill').style.width='0';fp.classList.remove('go');$('fpHint').textContent='ปล่อยก่อนแล้ว ลองกดค้างอีกทีนะ 👆'}
+fp.addEventListener('pointerdown',start);
+['pointerup','pointerleave','pointercancel'].forEach(ev=>fp.addEventListener(ev,stop));
+
+// 3) "ไม่" stays put and can't be pressed; "เป็น" grows each try
+const nos=['ปุ่มนี้กดไม่ได้นะ 🥺','ลองอีกทีก็ไม่ได้นะ 😤','ปุ่มเป็นใหญ่ขึ้นแล้วนะ กดเลยๆ 💗','ง้อแล้วนะ กดเป็นเถอะน้า 🥹','คุณปานน่ารักที่สุดเลย กดเป็นนะ 😘'];
+const stks=[['😭','ฮือออ ไม่เอาาา'],['🥺','อย่ากดไม่นะ...'],['😿','เสียใจนะ แงงง'],['💔','ใจสลายแล้ว'],['🧸😭','น้องหมีร้องไห้แล้วน้า'],['😢','น้ำตาไหลแล้วนะ']];
+function sticker(i){document.querySelectorAll('.stk').forEach(e=>e.remove());const [e,t]=stks[i%stks.length];
+  const s=document.createElement('div');s.className='stk';s.innerHTML='<div class="em">'+e+'</div><div class="bub">'+t+'</div>';document.body.appendChild(s);setTimeout(()=>s.remove(),2000);
+  for(let k=0;k<7;k++){const d=document.createElement('div');d.className='tear';d.textContent='💧';d.style.left=(50+(Math.random()*60-30))+'%';d.style.top=(26+Math.random()*6)+'%';d.style.animationDelay=Math.random()*.7+'s';document.body.appendChild(d);setTimeout(()=>d.remove(),2000)}}
+let n=0;
+$('no').addEventListener('click',()=>{const b=$('no');b.classList.remove('shake');void b.offsetWidth;b.classList.add('shake');buzz(40);
+  $('noMsg').textContent=nos[Math.min(n,nos.length-1)];sticker(n);pop(260);n++;document.body.style.setProperty('--g',Math.min(1+n*.12,1.6))});
+$('yes').addEventListener('click',e=>{buzz([80,50,80,50,120]);pop(700);show('s4');rain();clock()});
+
+// 4) celebration
+function rain(){const em=['💗','💕','💖','🧸','✨','🌸','🎉'];
+  for(let i=0;i<40;i++){const h=document.createElement('div');h.className='fx';h.textContent=em[i%em.length];
+    h.style.left=Math.random()*100+'vw';h.style.top='-30px';h.style.fontSize=16+Math.random()*22+'px';
+    h.style.animationDuration=3+Math.random()*3+'s';h.style.animationDelay=Math.random()*2.5+'s';
+    document.body.appendChild(h);setTimeout(()=>h.remove(),9000)}
+  setTimeout(()=>{if($('s4').classList.contains('on'))rain()},6000)}
+function clock(){const t0=Date.now();setInterval(()=>{const s=Math.floor((Date.now()-t0)/1000),m=Math.floor(s/60);
+  $('timer').textContent='เป็นแฟนกันมาแล้ว '+(m?m+' นาที ':'')+(s%60)+' วินาที ⏱️'},1000)}
+$('send').addEventListener('click',e=>love(e.clientX,e.clientY));
+
+function mas(m){
+  const E={normal:'<circle cx="76" cy="102" r="7" fill="#2b3a55"/><circle cx="124" cy="102" r="7" fill="#2b3a55"/><circle cx="78" cy="99" r="2.5" fill="#fff"/><circle cx="126" cy="99" r="2.5" fill="#fff"/>',
+   happy:'<path d="M64 106q12-16 24 0M112 106q12-16 24 0" stroke="#2b3a55" stroke-width="5" fill="none" stroke-linecap="round"/>',
+   love:'<text x="62" y="114" font-size="30">\ud83d\udc97</text><text x="110" y="114" font-size="30">\ud83d\udc97</text>',
+   cry:'<path d="M66 100l20 6-20 6M134 100l-20 6 20 6" stroke="#2b3a55" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M72 118q-4 18 0 28M128 118q4 18 0 28" stroke="#4aa8ff" stroke-width="7" fill="none" stroke-linecap="round"/>'};
+  const M={normal:'<path d="M90 132q10 9 20 0" stroke="#2b3a55" stroke-width="4" fill="none" stroke-linecap="round"/>',
+   love:'<path d="M90 132q10 9 20 0" stroke="#2b3a55" stroke-width="4" fill="none" stroke-linecap="round"/>',
+   happy:'<path d="M86 130q14 22 28 0z" fill="#ff7a9c" stroke="#2b3a55" stroke-width="3.5" stroke-linejoin="round"/>',
+   cry:'<path d="M88 140q12-14 24 0" stroke="#2b3a55" stroke-width="4" fill="none" stroke-linecap="round"/>'};
+  return '<svg viewBox="0 0 200 200"><ellipse cx="68" cy="50" rx="18" ry="46" transform="rotate(-8 68 50)" fill="#fff" stroke="#e8b7c8" stroke-width="3"/><ellipse cx="68" cy="52" rx="9" ry="31" transform="rotate(-8 68 52)" fill="#ffb3c8"/><ellipse cx="132" cy="50" rx="18" ry="46" transform="rotate(8 132 50)" fill="#fff" stroke="#e8b7c8" stroke-width="3"/><ellipse cx="132" cy="52" rx="9" ry="31" transform="rotate(8 132 52)" fill="#ffb3c8"/><ellipse cx="100" cy="120" rx="68" ry="58" fill="#fff" stroke="#e8b7c8" stroke-width="3"/><ellipse cx="60" cy="128" rx="12" ry="8" fill="#ffb3c8" opacity=".8"/><ellipse cx="140" cy="128" rx="12" ry="8" fill="#ffb3c8" opacity=".8"/>'+E[m]+'<ellipse cx="100" cy="118" rx="6" ry="4.5" fill="#ff8fb1"/>'+M[m]+'<path d="M100 180L76 168v24zM100 180l24-12v24z" fill="#ff7fa8"/><circle cx="100" cy="180" r="7" fill="#ff5c8f"/></svg>';
+}
+const moods={s1:'normal',s2:'normal',s3:'love',s4:'happy'};
+document.querySelectorAll('.mascot').forEach(e=>e.innerHTML=mas(moods[e.closest('.screen').id]));
+$('no').addEventListener('click',()=>{const m=document.querySelector('#s3 .mascot');m.innerHTML=mas('cry');clearTimeout(window._mt);window._mt=setTimeout(()=>m.innerHTML=mas('love'),1900)});
+</script>
+</body>
+</html>
